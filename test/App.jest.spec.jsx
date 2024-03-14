@@ -1,8 +1,8 @@
 import React from 'react';
-import { render, screen } from '@testing-library/react';
+import { render, screen, waitFor } from '@testing-library/react';
 import axiosMock from 'axios';
 import { act } from 'react-dom/test-utils';
-import '@testing-library/jest-dom/extend-expect';
+import '@testing-library/jest-dom';
 import App from '../src/App';
 
 jest.mock('axios');
@@ -29,7 +29,7 @@ describe('<App />', () => {
 		axiosMock.get.mockResolvedValueOnce({});
 		await act(async () => {
 			const { getByAltText } = render(<App />);
-			expect(getByAltText('Loading...')).toBeVisible();
+			waitFor(() => expect(getByAltText('Loading...')).toBeVisible());
 		});
 	});
 
